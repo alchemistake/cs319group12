@@ -1,6 +1,11 @@
 ## CS 319 - Object Oriented Software Engineering Project Group 12
 #Astunc
 
+### Group Members
++ 21401961 - Mustafa Caner Çalışkaner
++ 21401058 - Orhun Kar
++ 21302509 - Burak Şenel
+
 ### Game Description
 We are planning to make a “Bullet Hell” game. “Bullet hell” is a subgenre of the “Shoot ‘em Up” game genre. “Shoot ‘em Up”s are games in which the protagonist combats a large number of enemies by shooting at them while dodging their fire. The controlling player must rely primarily on reaction times to succeed.[1] ”Bullet Hell” is a shoot 'em up in which the entire screen is often almost completely filled with enemy bullets.[2] These kind of games can be explained as Chicken Invaders 2 with a lot of projectiles in screen.
 
