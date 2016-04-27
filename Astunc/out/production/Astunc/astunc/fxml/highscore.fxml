@@ -6,12 +6,13 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="astunc.HighscoreController">
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="astunc.controllers.HighscoreController">
    <children>
       <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" text="High Scores">
          <VBox.margin>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </VBox.margin></Text>
+      <ListView fx:id="list" stylesheets="@globalStyleSheet.css" />
       <Button fx:id="exit" mnemonicParsing="false" onAction="#returnToMainMenu" text="Return to Main Menu" textAlignment="CENTER">
          <VBox.margin>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

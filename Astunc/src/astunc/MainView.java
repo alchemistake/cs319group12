@@ -1,28 +1,26 @@
 package astunc;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Set;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import astunc.controllers.ControllableScreen;
+import astunc.models.DataManager;
 import javafx.beans.property.DoubleProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
 
-public class ScreensController extends StackPane {
+public class MainView extends StackPane {
     private HashMap<String, Node> screens = new HashMap<>();
+    private DataManager dataManager;
 
-    public ScreensController() {
+    public MainView(DataManager dataManager) {
         super();
+        this.dataManager = dataManager;
     }
 
         public void addScreen(String name, Node screen) {
@@ -35,7 +33,7 @@ public class ScreensController extends StackPane {
 
         public boolean loadScreen(String name, String resource) {
         try {
-            FXMLLoader myLoader = new FXMLLoader(getClass().getResource(resource));
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("fxml/" + resource));
             Parent loadScreen = (Parent) myLoader.load();
             ControllableScreen myScreenControler = ((ControllableScreen) myLoader.getController());
             myScreenControler.setScreenParent(this);
@@ -43,6 +41,7 @@ public class ScreensController extends StackPane {
             return true;
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -52,6 +51,7 @@ public class ScreensController extends StackPane {
             final DoubleProperty opacity = opacityProperty();
 
             if (!getChildren().isEmpty()) {
+                /*
                 Timeline fade = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
                         new KeyFrame(new Duration(1000), new EventHandler<ActionEvent>() {
@@ -66,14 +66,16 @@ public class ScreensController extends StackPane {
                             }
                         }, new KeyValue(opacity, 0.0)));
                 fade.play();
-
+                */
+                getChildren().remove(0);                    //remove the displayed screen
+                getChildren().add(0, screens.get(name));     //add the screen
             } else {
-                setOpacity(0.0);
+                //setOpacity(0.0);
                 getChildren().add(screens.get(name));
-                Timeline fadeIn = new Timeline(
-                        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                        new KeyFrame(new Duration(2500), new KeyValue(opacity, 1.0)));
-                fadeIn.play();
+                //Timeline fadeIn = new Timeline(
+                //        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
+                //        new KeyFrame(new Duration(1000), new KeyValue(opacity, 1.0)));
+                //fadeIn.play();
             }
             return true;
         } else {
@@ -89,5 +91,9 @@ public class ScreensController extends StackPane {
         } else {
             return true;
         }
+    }
+
+    public DataManager getDataManager() {
+        return dataManager;
     }
 }

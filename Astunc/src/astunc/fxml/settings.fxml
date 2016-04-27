@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="astunc.controllers.SettingsController">
+   <children>
+      <VBox alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Text>
+            <TextField fx:id="p1Name" promptText="Enter Name">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="p1Up" onAction="#setKeyCode" mnemonicParsing="false" text="Up:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p1Down" onAction="#setKeyCode" mnemonicParsing="false" text="Down:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p1Left" onAction="#setKeyCode" mnemonicParsing="false" text="Left:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p1Right" onAction="#setKeyCode" mnemonicParsing="false" text="Right:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p1Shoot" onAction="#setKeyCode" mnemonicParsing="false" text="Shoot:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p1Pause" onAction="#setKeyCode" mnemonicParsing="false" text="Pause:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p1Gray" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/GRAY.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="p1Red" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/RED.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="p1Blue" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/BLUE.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="p1Cyan" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/CYAN.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+      <Separator orientation="VERTICAL"/>
+      <VBox alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Player 2" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Text>
+            <TextField fx:id="p2Name" promptText="Enter Name">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="p2Up" onAction="#setKeyCode" mnemonicParsing="false" text="Up:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p2Down" onAction="#setKeyCode" mnemonicParsing="false" text="Down:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p2Left" onAction="#setKeyCode" mnemonicParsing="false" text="Left:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p2Right" onAction="#setKeyCode" mnemonicParsing="false" text="Right:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p2Shoot" onAction="#setKeyCode" mnemonicParsing="false" text="Shoot:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p2Pause" onAction="#setKeyCode" mnemonicParsing="false" text="Pause:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p2Gray" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/GRAY.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="p2Red" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/RED.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="p2Blue" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/BLUE.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="p2Cyan" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/CYAN.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button onAction="#returnToMainMenu" mnemonicParsing="false" text="Return to Main Menu">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <Separator orientation="VERTICAL"/>
+      <VBox alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Player 3" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Text>
+            <TextField fx:id="p3Name" promptText="Enter Name">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="p3Up" onAction="#setKeyCode" mnemonicParsing="false" text="Up:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p3Down" onAction="#setKeyCode" mnemonicParsing="false" text="Down:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p3Left" onAction="#setKeyCode" mnemonicParsing="false" text="Left:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p3Right" onAction="#setKeyCode" mnemonicParsing="false" text="Right:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p3Shoot" onAction="#setKeyCode" mnemonicParsing="false" text="Shoot:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p3Pause" onAction="#setKeyCode" mnemonicParsing="false" text="Pause:">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="p3Gray" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/GRAY.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="p3Red" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/RED.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="p3Blue" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/BLUE.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="p3Cyan" onAction="#setSpaceShip" mnemonicParsing="false">
+               <VBox.margin>
+                  <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/playerShips/CYAN.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</HBox>
