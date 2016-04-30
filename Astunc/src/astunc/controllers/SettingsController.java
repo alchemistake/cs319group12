@@ -7,16 +7,20 @@ import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 
 public class SettingsController implements ControllableScreen {
     public static final String UP = "Up: ", DOWN = "Down: ", LEFT = "Left: ", RIGHT = "Right: ", SHOOT = "Shoot: ", PAUSE = "Pause: ";
     public static final String[] KEY_NAMES = new String[]{UP, DOWN, LEFT, RIGHT, SHOOT, PAUSE};
     public static final String CSS = "-fx-background-color: blue";
 
+    @FXML
+    private HBox root;
     @FXML
     private TextField p1Name, p2Name, p3Name;
     @FXML
@@ -52,31 +56,43 @@ public class SettingsController implements ControllableScreen {
     private SettingsModel.SpaceShip[] shipsToBeSaved;
 
     public SettingsController() {
-        keyCodePressHandler = event -> {
-            KeyCode curKeyCode = event.getCode();
-            event.consume();
-            if (curKeyCode == KeyCode.ESCAPE) {
-                activeKeyCodeButton.setText(activeKeyCodeButtonPrevText);
-                activeKeyCodeButton.removeEventFilter(KeyEvent.KEY_PRESSED, keyCodePressHandler);
-                activeKeyCodeButton = null;
-            } else if (validate(curKeyCode)) {
-                for (int i = 0; i < 6; i++) {
-                    if (activeKeyCodeButtonPrevText.contains(KEY_NAMES[i])) {
-                        activeKeyCodeButton.setText(KEY_NAMES[i] + curKeyCode);
-                        activeKeyCodeButton.removeEventFilter(KeyEvent.KEY_PRESSED, keyCodePressHandler);
-                        keyCodesToSave[(activeKeyCodeButton.getId().charAt(1) - '1')][i] = curKeyCode;
-                        activeKeyCodeButton = null;
-                        break;
-                    }
-                }
-            }
-        };
     }
 
     @Override
     public void setScreenParent(MainView screenPage) {
         screenParent = screenPage;
-        setup();
+    }
+
+    @Override
+    public void unload() {
+        for (int i = 0; i < 3; i++)
+            screenParent.getDataManager().setPlayerSettings(i,keyCodesToSave[i],shipsToBeSaved[i],textFields[i].getText());
+
+        keyCodesToSave = null;
+        shipsToBeSaved = null;
+        textFields = null;
+
+        keyCodePressHandler = null;
+
+        p1Keys = null;
+        p2Keys = null;
+        p3Keys = null;
+
+        blues = null;
+        reds = null;
+        grays = null;
+        cyans = null;
+
+        p1Ships = null;
+        p2Ships = null;
+        p3Ships = null;
+
+        ships = null;
+    }
+
+    @Override
+    public Node getRoot() {
+        return root;
     }
 
     @FXML
@@ -157,12 +173,31 @@ public class SettingsController implements ControllableScreen {
 
     @FXML
     private void returnToMainMenu(ActionEvent actionEvent) {
-        for (int i = 0; i < 3; i++)
-            screenParent.getDataManager().setPlayerSettings(i,keyCodesToSave[i],shipsToBeSaved[i],textFields[i].getText());
         screenParent.setScreen(Main.MAIN_MENU_NAME);
     }
 
-    private void setup() {
+    @Override
+    public void load() {
+        keyCodePressHandler = event -> {
+            KeyCode curKeyCode = event.getCode();
+            event.consume();
+            if (curKeyCode == KeyCode.ESCAPE) {
+                activeKeyCodeButton.setText(activeKeyCodeButtonPrevText);
+                activeKeyCodeButton.removeEventFilter(KeyEvent.KEY_PRESSED, keyCodePressHandler);
+                activeKeyCodeButton = null;
+            } else if (validate(curKeyCode)) {
+                for (int i = 0; i < 6; i++) {
+                    if (activeKeyCodeButtonPrevText.contains(KEY_NAMES[i])) {
+                        activeKeyCodeButton.setText(KEY_NAMES[i] + curKeyCode);
+                        activeKeyCodeButton.removeEventFilter(KeyEvent.KEY_PRESSED, keyCodePressHandler);
+                        keyCodesToSave[(activeKeyCodeButton.getId().charAt(1) - '1')][i] = curKeyCode;
+                        activeKeyCodeButton = null;
+                        break;
+                    }
+                }
+            }
+        };
+
         p1Keys = new Button[]{p1Up, p1Down, p1Left, p1Right, p1Shoot, p1Pause};
         p2Keys = new Button[]{p2Up, p2Down, p2Left, p2Right, p2Shoot, p2Pause};
         p3Keys = new Button[]{p3Up, p3Down, p3Left, p3Right, p3Shoot, p3Pause};

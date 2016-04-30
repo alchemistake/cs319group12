@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="astunc.controllers.MainMenuController">
+<?import javafx.scene.text.Text?>
+<VBox fx:id="root" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="astunc.controllers.MainMenuController">
    <children>
       <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" text="ASTUNC">
          <VBox.margin>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </VBox.margin></Text>
-      <Button fx:id="start" mnemonicParsing="false" text="Play Game" textAlignment="CENTER">
+      <Button fx:id="start" mnemonicParsing="false" text="Play Game"  onAction="#showGame" textAlignment="CENTER">
          <VBox.margin>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </VBox.margin>

@@ -1,10 +1,17 @@
 package astunc.controllers;
 
 import astunc.MainView;
+import javafx.scene.Node;
 
 /**
  * Created by Alchemistake on 26/04/16.
  */
 public interface ControllableScreen {
-    public void setScreenParent(MainView screenPage);
+    void setScreenParent(MainView screenPage);
+
+    void load();
+
+    void unload();
+
+    Node getRoot();
 }

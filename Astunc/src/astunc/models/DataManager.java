@@ -1,6 +1,5 @@
 package astunc.models;
 
-import astunc.models.SettingsModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sun.tools.javac.util.Pair;

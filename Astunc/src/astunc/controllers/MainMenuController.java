@@ -1,18 +1,23 @@
 package astunc.controllers;
 
-import astunc.models.DataManager;
 import astunc.Main;
 import astunc.MainView;
+import astunc.models.DataManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.layout.VBox;
 
 /**
  * Created by Alchemistake on 26/04/16.
  */
 public class MainMenuController implements ControllableScreen{
-    MainView screenParent;
-    DataManager dataManager;
+    @FXML
+    private VBox root;
+
+    private MainView screenParent;
+    private DataManager dataManager;
 
     @Override
     public void setScreenParent(MainView screenPage) {
@@ -32,5 +37,22 @@ public class MainMenuController implements ControllableScreen{
     @FXML
     public void showSettings(ActionEvent actionEvent){
         screenParent.setScreen(Main.SETTINGS_NAME);
+    }
+
+    @FXML
+    public void showGame(ActionEvent actionEvent){
+        screenParent.setScreen(Main.GAME_NAME);
+    }
+
+    @Override
+    public void load() {
+    }
+
+    @Override
+    public void unload() {}
+
+    @Override
+    public Node getRoot() {
+        return root;
     }
 }

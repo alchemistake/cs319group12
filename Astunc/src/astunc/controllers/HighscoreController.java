@@ -7,8 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -19,20 +21,33 @@ import java.util.concurrent.TimeUnit;
  */
 public class HighscoreController implements ControllableScreen {
     @FXML
-    Text title;
+    private VBox root;
     @FXML
-    ListView<String> list;
+    private Text title;
     @FXML
-    Button exit;
+    private ListView<String> list;
+    @FXML
+    private Button exit;
 
-    MainView screenParent;
+    private MainView screenParent;
 
     @Override
     public void setScreenParent(MainView screenPage) {
         this.screenParent = screenPage;
+    }
+
+    @Override
+    public void load() {
         this.list.setItems(getFormattedHighscores());
     }
 
+    @Override
+    public void unload() {}
+
+    @Override
+    public Node getRoot() {
+        return root;
+    }
 
     @FXML
     private void returnToMainMenu(ActionEvent actionEvent){

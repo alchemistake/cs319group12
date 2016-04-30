@@ -1,7 +1,6 @@
 package astunc.models;
 
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,43 +1,44 @@
 package astunc;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
 
 import astunc.controllers.ControllableScreen;
 import astunc.models.DataManager;
-import javafx.beans.property.DoubleProperty;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
+
+import java.util.HashMap;
 
 public class MainView extends StackPane {
-    private HashMap<String, Node> screens = new HashMap<>();
+    private static final double BY_VALUE = 0.1, DURATION = 0.5;
+
+    private HashMap<String, ControllableScreen> controls = new HashMap<>();
     private DataManager dataManager;
+    private ControllableScreen currentControllableScreen;
 
     public MainView(DataManager dataManager) {
         super();
         this.dataManager = dataManager;
     }
 
-        public void addScreen(String name, Node screen) {
-        screens.put(name, screen);
+    public void add(String name, ControllableScreen controllableScreen) {
+        controls.put(name, controllableScreen);
     }
 
-        public Node getScreen(String name) {
-        return screens.get(name);
+    public ControllableScreen get(String name) {
+        return controls.get(name);
     }
 
-        public boolean loadScreen(String name, String resource) {
+    public boolean loadScreen(String name) {
         try {
-            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("fxml/" + resource));
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("fxml/" + name + ".fxml"));
             Parent loadScreen = (Parent) myLoader.load();
-            ControllableScreen myScreenControler = ((ControllableScreen) myLoader.getController());
+            ControllableScreen myScreenControler = myLoader.getController();
             myScreenControler.setScreenParent(this);
-            addScreen(name, loadScreen);
+            add(name, myScreenControler);
             return true;
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -47,36 +48,37 @@ public class MainView extends StackPane {
     }
 
     public boolean setScreen(final String name) {
-        if (screens.get(name) != null) {
-            final DoubleProperty opacity = opacityProperty();
-
+        if (get(name) != null && get(name) != currentControllableScreen) {
             if (!getChildren().isEmpty()) {
-                /*
-                Timeline fade = new Timeline(
-                        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
-                        new KeyFrame(new Duration(1000), new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent t) {
-                                getChildren().remove(0);                    //remove the displayed screen
-                                getChildren().add(0, screens.get(name));     //add the screen
-                                Timeline fadeIn = new Timeline(
-                                        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                                        new KeyFrame(new Duration(800), new KeyValue(opacity, 1.0)));
-                                fadeIn.play();
-                            }
-                        }, new KeyValue(opacity, 0.0)));
-                fade.play();
-                */
-                getChildren().remove(0);                    //remove the displayed screen
-                getChildren().add(0, screens.get(name));     //add the screen
+                currentControllableScreen.unload();
+                get(name).load();
+                getChildren().add(1, get(name).getRoot());     //add the screen
+
+                FadeTransition fadeOutTransition = new FadeTransition(Duration.seconds(DURATION), currentControllableScreen.getRoot());
+                fadeOutTransition.setFromValue(1);
+                fadeOutTransition.setInterpolator(Interpolator.EASE_OUT);
+                fadeOutTransition.setToValue(0);
+                fadeOutTransition.setOnFinished(event -> getChildren().remove(0));
+
+                FadeTransition fadeInTransition = new FadeTransition(Duration.seconds(DURATION), get(name).getRoot());
+                fadeInTransition.setFromValue(0);
+                fadeInTransition.setInterpolator(Interpolator.EASE_IN);
+                fadeInTransition.setToValue(1);
+
+                fadeOutTransition.play();
+                fadeInTransition.play();
             } else {
-                //setOpacity(0.0);
-                getChildren().add(screens.get(name));
-                //Timeline fadeIn = new Timeline(
-                //        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                //        new KeyFrame(new Duration(1000), new KeyValue(opacity, 1.0)));
-                //fadeIn.play();
+                get(name).load();
+                getChildren().add(get(name).getRoot());     //add the screen
+
+                FadeTransition fadeInTransition = new FadeTransition(Duration.seconds(DURATION), get(name).getRoot());
+                fadeInTransition.setFromValue(0);
+                fadeInTransition.setInterpolator(Interpolator.EASE_IN);
+                fadeInTransition.setToValue(1);
+
+                fadeInTransition.play();
             }
+            currentControllableScreen = get(name);
             return true;
         } else {
             System.out.println("Screen hasn't been loaded!!! \n");
@@ -85,7 +87,7 @@ public class MainView extends StackPane {
     }
 
     public boolean unloadScreen(String name) {
-        if (screens.remove(name) == null) {
+        if (controls.remove(name) == null) {
             System.out.println("Screen didn't exist");
             return false;
         } else {
