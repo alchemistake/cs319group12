@@ -2,7 +2,10 @@ package astunc.controllers;
 
 import astunc.Main;
 import astunc.MainView;
+import astunc.models.DataManager;
 import astunc.models.GameEngine;
+import astunc.models.gameObjects.Enemy;
+import com.sun.tools.javac.util.Pair;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -40,7 +43,8 @@ public class GameController implements ControllableScreen {
 
     private GameEngine gameEngine;
 
-    private ArrayList<Line> friendlyProjetiles;
+    private ArrayList<Line> friendlyProjetiles, enemyProjectiles;
+    private ArrayList<ImageView> enemy;
 
     private MotionBlur motionBlur;
 
@@ -56,6 +60,8 @@ public class GameController implements ControllableScreen {
         motionBlur.setRadius(30);
 
         friendlyProjetiles = new ArrayList<>();
+        enemyProjectiles = new ArrayList<>();
+        enemy = new ArrayList<>();
 
         player = new ImageView[3];
 
@@ -105,6 +111,8 @@ public class GameController implements ControllableScreen {
         motionBlur = null;
 
         friendlyProjetiles = null;
+        enemyProjectiles = null;
+        enemy = null;
 
         active = false;
         try {
@@ -129,7 +137,7 @@ public class GameController implements ControllableScreen {
 
     private void update() {
         for (int i = 0; i < 3; i++) {
-            TranslateTransition tt = new TranslateTransition(Duration.millis(STEP_TIME),player[i]);
+            TranslateTransition tt = new TranslateTransition(Duration.millis(STEP_TIME), player[i]);
             tt.setToX(gameEngine.getPlayerX(i));
             tt.setToY(gameEngine.getPlayerY(i));
             tt.setInterpolator(Interpolator.LINEAR);
@@ -139,10 +147,27 @@ public class GameController implements ControllableScreen {
         for (Line l :
                 friendlyProjetiles) {
             l.setLayoutY(l.getLayoutY() - 50);
-            if(l.getLayoutY() + l.getStartY() < 0){
+            if (l.getLayoutY() + l.getEndY() < 0) {
                 Platform.runLater(() -> friendlyProjetiles.remove(l));
                 root.getChildren().remove(l);
             }
+        }
+
+        for (int i = 0; i < enemy.size(); i++) {
+            enemy.get(i).setX(gameEngine.getEnemyX(i));
+            enemy.get(i).setY(gameEngine.getEnemyY(i));
+            if(gameEngine.getEnemyFire(i))
+                spawnEnemyProjectile(gameEngine.getEnemyX(i) + gameEngine.getEnemyWidth(i) / 2,gameEngine.getEnemyY(i));
+        }
+
+        for (Line l :
+                enemyProjectiles) {
+            l.setLayoutY(l.getLayoutY() + 50);
+            if (l.getLayoutY() + l.getEndY() > 800) {
+                Platform.runLater(() -> enemyProjectiles.remove(l));
+                root.getChildren().remove(l);
+            }
+
         }
     }
 
@@ -186,6 +211,26 @@ public class GameController implements ControllableScreen {
             protected Void call() {
                 while (active) {
                     gameEngine.calculatePlayerPositions(playerPressedKeys);
+                    gameEngine.updateEnemies();
+
+                    friendlyProjetiles.stream().filter(l -> gameEngine.checkEnemyCollision((int) (l.getLayoutX() + l.getEndX()), (int) (l.getLayoutY() + l.getStartY()))).forEach(l -> {
+
+                        Platform.runLater(() -> {
+                            root.getChildren().remove(l);
+                            friendlyProjetiles.remove(l);
+                        });
+                    });
+
+                    gameEngine.enemySpawner();
+
+                    enemyProjectiles.stream().filter(l -> gameEngine.checkFriendlyCollision((int) (l.getLayoutX() + l.getEndX()), (int) (l.getLayoutY() + l.getStartY()))).forEach(l -> {
+
+                        Platform.runLater(() -> {
+                            root.getChildren().remove(l);
+                            enemyProjectiles.remove(l);
+                        });
+                    });
+
                     Platform.runLater(() -> update());
                     try {
                         Thread.sleep(STEP_TIME);
@@ -210,6 +255,50 @@ public class GameController implements ControllableScreen {
         line.setEffect(motionBlur);
 
         friendlyProjetiles.add(line);
-        root.getChildren().add(0,line);
+        root.getChildren().add(0, line);
+    }
+
+    public void spawnEnemyProjectile(int x, int y) {
+        Line line = new Line(x, y, x, y - 20);
+        line.setStrokeLineCap(StrokeLineCap.ROUND);
+        line.setStroke(Color.BLUE);
+        line.setStrokeWidth(10);
+
+        line.setEffect(motionBlur);
+
+        enemyProjectiles.add(line);
+        root.getChildren().add(0, line);
+    }
+
+    public void killEnemy(int i) {
+        root.getChildren().remove(enemy.get(i));
+
+        enemy.remove(i);
+        gameEngine.killEnemy(i);
+    }
+
+    public void spawnEnemy() {
+        ImageView iv = new ImageView(new Image(getClass().getResource("../images/alienShips/alien" + (int) ((Math.random() * 15) + 1) + ".png").toString()));
+        iv.setPreserveRatio(true);
+        iv.setFitHeight(100);
+        iv.setFitWidth(100);
+
+        enemy.add(iv);
+        gameEngine.addEnemy(iv);
+        root.getChildren().add(iv);
+    }
+
+    public void win(long l) {
+        DataManager dm = screenParent.getDataManager();
+        StringBuilder players = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            if(gameEngine.getPlayerPlay(i)){
+                players.append(dm.getPlayerName(i));
+                players.append('&');
+            }
+        }
+        dm.updateHighscores(new Pair<>(players.toString(),l));
+
+        screenParent.setScreen(Main.MAIN_MENU_NAME);
     }
 }

@@ -12,4 +12,5 @@ public interface Entity {
     void down();
     void left();
     void right();
+    void validate();
 }
