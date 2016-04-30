@@ -2,27 +2,30 @@ package astunc.models.gameObjects;
 
 import javafx.scene.image.ImageView;
 
-/**
- * Created by Alchemistake on 30/04/16.
- */
 public class Player implements FriendlyEntity {
+    private final int DELTA = 25;
+
     private int x, y, width, height;
+    private boolean play;
 
     public Player(ImageView imageView) {
         width = (int) imageView.getBoundsInLocal().getWidth();
         height = (int) imageView.getBoundsInLocal().getWidth();
+        x = (600 - width) / 2;
+        y = 700 - height;
+        play = false;
     }
 
     @Override
     public void validate() {
         if (x < -width / 2)
             x = -width / 2;
-        else if (x > 600 + width / 2)
-            x = 600 + width / 2;
+        else if (x > 600 - width / 2)
+            x = 600 - width / 2;
         if (y < -height / 2)
             y = -height / 2;
-        else if (y > 800 + height / 2)
-            y = 800 + height / 2;
+        else if (y > 800 - height / 2)
+            y = 800 - height / 2;
     }
 
     @Override
@@ -49,21 +52,33 @@ public class Player implements FriendlyEntity {
 
     @Override
     public void up() {
-        y--;
+        if(play)
+            y -= DELTA;
     }
 
     @Override
     public void down() {
-        y++;
+        if(play)
+            y += DELTA;
     }
 
     @Override
     public void left() {
-        x--;
+        if(play)
+            x -= DELTA;
     }
 
     @Override
     public void right() {
-        x++;
+        if(play)
+            x += DELTA;
+    }
+
+    public void play(){
+        play = true;
+    }
+
+    public boolean isPlay() {
+        return play;
     }
 }
